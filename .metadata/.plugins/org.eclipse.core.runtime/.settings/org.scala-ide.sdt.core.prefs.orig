@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+<<<<<<< HEAD
+org.scala-ide.sdt.core.diagnostic.currentPluginVersion=3.0.4.v-2_11-201407232043-c46f499
+=======
+org.scala-ide.sdt.core.diagnostic.currentPluginVersion=3.0.3.v-2_10-201403271605-8d2c756
+>>>>>>> 5c7465f2d43f120b118427f489e237fa0609b28b
