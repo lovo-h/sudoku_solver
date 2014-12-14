@@ -5,29 +5,41 @@ import java.io.File
 object Main {
   // main
   def main(args: Array[String]): Unit = {
-    val rows = Array(
-      "000 000 000",
-      "000 000 000",
-      "000 000 000",
-
-      "000 000 000",
-      "000 000 000",
-      "000 000 000",
-
-      "000 123 456",
-      "000 000 000",
-      "123 000 000");
-
-    System.out.println("INITIALIZED BOARD");
+    var puzzle = "...........5....9...4....1.2....3.5....7.....438...2......9.....1.4...6..........";
     var ss = new Sudoku_Solver();
-    ss.print_board(rows);
-    System.out.println("ROW: 9");
-    ss.print_row(rows, 8);
-    System.out.println("COL: 2");
-    ss.print_col(rows, 1);
-    System.out.println("SECT: 8");
-    ss.print_sect(rows, 7)
+    ss.initializeBoard(puzzle);
+
+    System.out.println("BOARD:");
+    printGameBoard(ss.getBoard());
+    //    System.out.println("COL:1");
+    //    printCol(ss.getBoard, 0);
+    //    System.out.println("ROW: 1");
+    //    printRow(ss.getBoard, 0);
 
   }
 
+  def printGameBoard(board: collection.mutable.Map[String, String]): Unit = {
+    for (row <- 0 until 9) {
+      for (col <- 0 until 9) {
+        System.out.print(board(row.toString + col.toString));
+        if ((col + 1) % 3 == 0) System.out.print(" ");
+      }
+      if (row == 2 || row == 5) System.out.println();
+      System.out.println();
+    }
+  }
+
+  def printCol(board: collection.mutable.Map[String, String], col: Int): Unit = {
+    for (row <- 0 until 9) {
+      System.out.print(board(row.toString + col.toString) + " ");
+    }
+    System.out.println();
+  }
+
+  def printRow(board: collection.mutable.Map[String, String], row: Int): Unit = {
+    for (col <- 0 until 9) {
+      System.out.print(board(row.toString + col.toString) + " ");
+    }
+    System.out.println();
+  }
 }
