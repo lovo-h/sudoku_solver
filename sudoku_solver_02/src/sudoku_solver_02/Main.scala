@@ -9,6 +9,7 @@ object Main {
     var ss = new Sudoku_Solver();
 
     ss.initializeBoard(puzzle);
+    ss.start();
 
     //    System.out.println("BOARD:");
     //    printGameBoard(ss.getBoard());

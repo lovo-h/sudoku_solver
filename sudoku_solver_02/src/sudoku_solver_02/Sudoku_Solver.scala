@@ -2,7 +2,7 @@ package sudoku_solver_02
 
 class Sudoku_Solver {
   val board = collection.mutable.Map[String, String]();
-  val relations = collection.mutable.Map[String, collection.mutable.Map[String, String]]();
+  val relations = collection.mutable.Map[String, collection.mutable.Map[String, collection.mutable.Map[String, String]]]();
 
   def initializeBoard(puzzle: String): Unit = {
     var chars = puzzle.toCharArray();
@@ -21,20 +21,21 @@ class Sudoku_Solver {
   def setup_relations() {
     for (row <- 0 until 9) {
       for (col <- 0 until 9) {
-        val sect = convertRowColToSect(row, col);
+        val sectInt = convertRowColToSect(row, col);
+        val rows = getRow(row);
+        val cols = getCol(col);
+        val sects = getSect(sectInt);
+        val all_relations = rows ++ cols ++ sects;
 
-        relations += (row.toString + col.toString -> collection.mutable.Map[String, String]());
-        relations(row.toString + col.toString) += ("" -> "");
+        val mapElementAttrs = collection.mutable.Map[String, collection.mutable.Map[String, String]]();
+        mapElementAttrs += ("all" -> all_relations);
+        mapElementAttrs += ("rows" -> rows);
+        mapElementAttrs += ("cols" -> cols);
+        mapElementAttrs += ("sects" -> sects);
 
-        getRow(row) ++ getCol(col) ++ getSect(sect);
-
-        // ("all" -> "ALL RELATIONS FOR rc")
-        // ("row" ->
-        // ("col" ->
-        // ("sect" ->
-
-        // create group relations
-        // create all relative relations
+        relations += (row.toString + col.toString -> mapElementAttrs);
+        
+        System.out.println(relations);
 
       }
     }
@@ -43,11 +44,11 @@ class Sudoku_Solver {
   def convertRowColToSect(row: Int, col: Int): Int = {
     if (row < 3) {
       if (col < 3) {
-        3;
+        0;
       } else if (col > 5) {
-        5;
+        2;
       } else {
-        4;
+        1;
       }
     } else if (row > 5) {
       if (col < 3) {
@@ -59,11 +60,11 @@ class Sudoku_Solver {
       }
     } else {
       if (col < 3) {
-        0;
+        3;
       } else if (col > 5) {
-        2;
+        5;
       } else {
-        1;
+        4;
       }
     }
   }
