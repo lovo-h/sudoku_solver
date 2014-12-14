@@ -7,11 +7,15 @@ object Main {
   def main(args: Array[String]): Unit = {
     var puzzle = "...........5....9...4....1.2....3.5....7.....438...2......9.....1.4...6..........";
     var ss = new Sudoku_Solver();
+
     ss.initializeBoard(puzzle);
 
-    System.out.println("BOARD:");
-    printGameBoard(ss.getBoard());
+    //    System.out.println("BOARD:");
+    //    printGameBoard(ss.getBoard());
+    //    System.out.println("SECT: 3");
+    //    printSect(ss.getSect(2), 2);
     //    System.out.println("COL:1");
+    //    printCol(ss.getCol(0), 0);
     //    printCol(ss.getBoard, 0);
     //    System.out.println("ROW: 1");
     //    printRow(ss.getBoard, 0);
@@ -42,4 +46,19 @@ object Main {
     }
     System.out.println();
   }
+
+  def printSect(board: collection.mutable.Map[String, String], sectInt: Int): Unit = {
+    val rs = if (sectInt > 5) 6 else if (sectInt < 3) 0 else 3;
+    val re = rs + 3;
+    val cs = (sectInt % 3) * 3;
+    val ce = cs + 3;
+
+    for (row <- rs until re) {
+      for (col <- cs until ce) {
+        System.out.print(board(row.toString + col.toString));
+      }
+      System.out.println();
+    }
+  }
+
 }
