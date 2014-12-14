@@ -8,14 +8,30 @@ class Sudoku_Solver {
     var chars = puzzle.toCharArray();
     for (row <- 0 until 9) {
       for (col <- 0 until 9) {
-        board += (row.toString + col.toString -> chars(9 * row + col).toString);
+        board += (row.toString + col.toString -> "123456789");
       }
     }
+    // needed for solving
+    setup_relations();
   }
 
   def start(): Unit = {
-    setup_relations();
 
+  }
+
+  def processPuzzleInput(puzzle: String) {
+    var arrPuzzle = puzzle.toCharArray();
+
+    for (i <- 0 until arrPuzzle.length) {
+
+      if (arrPuzzle(i).toString.compareTo(".") == 0 || arrPuzzle(i).toString.compareTo("0") == 0) {
+        System.out.println("Skip");
+      } else {
+        //TODO: WORKING HERE
+        
+      }
+
+    }
   }
 
   def setup_relations() {
@@ -34,9 +50,6 @@ class Sudoku_Solver {
         mapElementAttrs += ("sects" -> sects);
 
         relations += (row.toString + col.toString -> mapElementAttrs);
-        
-        System.out.println(relations);
-
       }
     }
   }
@@ -69,7 +82,7 @@ class Sudoku_Solver {
     }
   }
 
-  // getters
+  // ================================================ GETTERS
   def getBoard(): collection.mutable.Map[String, String] = {
     board;
   }
@@ -108,3 +121,14 @@ class Sudoku_Solver {
   }
 
 }
+
+//  def initializeBoard(puzzle: String): Unit = {
+//    var chars = puzzle.toCharArray();
+//    for (row <- 0 until 9) {
+//      for (col <- 0 until 9) {
+//        board += (row.toString + col.toString -> chars(9 * row + col).toString);
+//      }
+//    }
+//    // needed for solving
+//    setup_relations();
+//  }
