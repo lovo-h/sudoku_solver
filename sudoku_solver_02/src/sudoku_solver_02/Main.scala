@@ -10,6 +10,7 @@ object Main {
 
     ss.initializeBoard(puzzle);
     ss.start();
+    ss.setup_relations();
 
     //    System.out.println("BOARD:");
     //    printGameBoard(ss.getBoard());

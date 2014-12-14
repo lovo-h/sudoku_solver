@@ -19,19 +19,64 @@ class Sudoku_Solver {
 
   }
 
-  def processPuzzleInput(puzzle: String) {
+  def processPuzzleInput(puzzle: String): Boolean = {
     var arrPuzzle = puzzle.toCharArray();
+    var col = 0;
+    var row = 0;
 
     for (i <- 0 until arrPuzzle.length) {
-
       if (arrPuzzle(i).toString.compareTo(".") == 0 || arrPuzzle(i).toString.compareTo("0") == 0) {
         System.out.println("Skip");
       } else {
-        //TODO: WORKING HERE
-        
+        if (!successfullySetElement(row.toString + col.toString, arrPuzzle(i).toString)) {
+          false;
+        }
       }
-
+      col += 1;
+      if (col > 8) {
+        col = 0;
+        row += 1;
+      }
     }
+    true;
+  }
+
+  def successfullySetElement(element: String, value: String): Boolean = {
+    val arrRemainingValuesofElement = board(element).toCharArray();
+
+    for (ele <- 0 to arrRemainingValuesofElement.length) {
+      if (!deducePuzzle(element, arrRemainingValuesofElement(ele).toString)) {
+        false;
+      }
+    }
+    true;
+  }
+
+  def deducePuzzle(element: String, delVal: String): Boolean = {
+    var currentEleVal = board(element);
+    var bakCurrentEleVal = currentEleVal;
+
+    if (!currentEleVal.contains(delVal)) { // if it's not in here, we cannot remove it
+      true;
+    }
+
+    currentEleVal = currentEleVal.replace(delVal, "");
+    board(element) = currentEleVal;
+
+    if (currentEleVal.length == 0) {
+      board(element) = bakCurrentEleVal; // abort, something went wrong
+      false;
+    } else if (currentEleVal.length == 1) {
+      var d2 = currentEleVal; // TODO: check if replaceable by cEV
+      var all_relations = relations(element)("all"); // key-value map
+      all_relations.foreach { key =>
+        if (!deducePuzzle(key._1, d2)) {
+          false;
+        }
+      };
+    }
+    // Working Here: need to add one final piece of logic
+    true;
   }
 
   def setup_relations() {
