@@ -5,7 +5,7 @@ import java.io.File
 object Main {
   // main
   def main(args: Array[String]): Unit = {
-    var puzzle = "...........5....9...4....1.2....3.5....7.....438...2......9.....1.4...6..........";
+    var puzzle = "1..97.5422....571.657.2..3.3..19465..6.832.7..18567..3.2..4.397.362....1894.13..5";
     var ss = new Sudoku_Solver();
     ss.processPuzzleInput(puzzle);
     printGameBoard(ss.getBoard);

@@ -1,8 +1,8 @@
 package sudoku_solver_02
 
 class Sudoku_Solver {
-  val board = collection.mutable.Map[String, String]();
-  val relations = collection.mutable.Map[String, collection.mutable.Map[String, collection.mutable.Map[String, String]]]();
+  var board = collection.mutable.Map[String, String]();
+  var relations = collection.mutable.Map[String, collection.mutable.Map[String, collection.mutable.Map[String, String]]]();
   var dPlacesCount = 0;
   var dPlaces = "";
 
@@ -16,7 +16,7 @@ class Sudoku_Solver {
     setup_relations();
   }
 
-  def processPuzzleInput(puzzle: String): Unit = {
+  def processPuzzleInput(puzzle: String): Boolean = {
     var arrPuzzle = puzzle.toCharArray();
     var col = 0;
     var row = 0;
@@ -41,19 +41,19 @@ class Sudoku_Solver {
     }
 
     if (isValidSolution) {
-      // verify solution
+      return(solveCurrentBoard());
     } else {
-      // return empty board
+      return false;
     }
 
     // return board when finished: return board
-
+//    return true;
   }
 
-  def solveCurrentBoard() {
+  def solveCurrentBoard(): Boolean = {
     // if all elements have a single solution, it's already valid
     if (isCurrentBoardSolutionValid()) {
-      // return true or return board
+      return true;
     }
 
     var minElementVal = "123456789";
@@ -73,19 +73,25 @@ class Sudoku_Solver {
     }
 
     // just in case something goes wrong, we backup
-    var backupCurrentBoard = board.clone;
+    var backupCurrentBoard: collection.mutable.Map[String, String] = board.clone;
     var arrPossibleSolutions = board(location).toCharArray();
     var isPossibleNow: Boolean = false;
 
     for (sol <- 0 to arrPossibleSolutions.length - 1) {
       // TODO: WORKING HERE
       if (successfullySetElement(location, arrPossibleSolutions(sol).toString)) {
-        
+        if (!solveCurrentBoard) {
+          board = backupCurrentBoard.clone;
+          return false;
+        } else {
+          return true;
+        }
       } else {
-        
+        board = backupCurrentBoard.clone;
+        return false;
       }
     }
-
+    return true;
   }
 
   def isCurrentBoardSolutionValid(): Boolean = {
