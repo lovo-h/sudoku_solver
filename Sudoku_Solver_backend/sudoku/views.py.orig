@@ -44,7 +44,7 @@ def solvePuzzle(request):
             puzNotIn = 'puz' not in request.session
             oldPuzNotEq =  getPuzzle(request.POST) != request.session['puz']
             if solNotIn or puzNotIn or oldPuzNotEq:
-                sol = process(request.POST, 'hint')
+                sol = process(request.POST)
                 puzzle = getPuzzle(request.POST)
                 request.session['sol'] = sol
                 request.session['puz'] = puzzle
@@ -59,6 +59,10 @@ def solvePuzzle(request):
                 init, ret_puz = parse_solution2(sol, puzzle)
                 request.session['puz'] = ret_puz
                 form = SudokuPuzzleForm(init)
+<<<<<<< HEAD
+
+
+=======
         elif 'play' in request.POST:
             sol = process(request.POST, 'play')
             if '0' in sol[0:1]:
@@ -67,13 +71,18 @@ def solvePuzzle(request):
             else:
                 init = parse_solution(sol)
                 form = SudokuPuzzleForm(init)
+>>>>>>> 7f9bd36c96749051f6f1a8e99f46fd72fbbbbb6c
         elif 'submit' in request.POST:
             sol = process(request.POST, 'submit')
             if '0' in sol[0:1]:
                 form = SudokuPuzzleForm(request.POST)
+<<<<<<< HEAD
+                err = "No Solution Found"
             elif '.' not in sol:
                 init = parse_solution(sol)
                 form = SudokuPuzzleForm(init)
+=======
+>>>>>>> 7f9bd36c96749051f6f1a8e99f46fd72fbbbbb6c
             else:
                 init = parse_solution(sol)
                 form = SudokuPuzzleForm(init)
@@ -89,6 +98,22 @@ def solvePuzzle(request):
 
 def getPuzzle(elements):
     puzzle = ""
+<<<<<<< HEAD
+    for row in range(0, 9):
+        for col in range(0, 9):
+            ele = "r" + str(row) + "c" + str(col)
+            if elements[ele] == "":
+                puzzle += "."
+            else:
+                puzzle += elements[ele]
+    return puzzle
+
+def process(elements):
+    puzzle = getPuzzle(elements)
+
+    # if type == 'hint':
+    #     puzzle += "h"
+=======
     if type != 'play':
         for row in range(0, 9):
             for col in range(0, 9):
@@ -99,13 +124,12 @@ def getPuzzle(elements):
                     puzzle += "."
                 else:
                     puzzle += elements[ele]
-    return puzzle
 
-def process(elements, type):
-    puzzle = getPuzzle(elements)
+    if type == 'hint':
+        puzzle += "h"
     if type == 'play':
         puzzle += "play"
-    #     puzzle += "h"
+>>>>>>> 7f9bd36c96749051f6f1a8e99f46fd72fbbbbb6c
     file_problem = "./sudoku_solver_02/problem.txt"
     file_solution = "./sudoku_solver_02/solution.txt"
     my_returned_solution = ""
