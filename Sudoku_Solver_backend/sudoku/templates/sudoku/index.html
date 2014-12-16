@@ -1,0 +1,211 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {#    <link rel="icon" href="../../favicon.ico">#}
+
+    <title>Sudoku Solver</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/starter-template.css" %}" rel="stylesheet">
+
+    <style>
+        input {
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+            border: 1px solid;
+        }
+
+        .brand {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            margin: auto;
+        }
+
+        tr.spaceUnder > td {
+            padding-bottom: 1em;
+        }
+
+        td:nth-child(3) {
+            padding-right: 1em;
+        }
+
+        td:nth-child(6) {
+            padding-right: 1em;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container center">
+        <div class="navbar-header">
+            <a class="navbar-brand brand" href="#">Sudoku Solver</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row ">
+        <div class="col-md-12">
+            <br/><br/>
+
+            <div class="text-center" style="color: red; font-size: 2em; font-weight: bold;">
+                {% if err %}
+                    {{ err }}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <form action='./solve' method='POST'>{% csrf_token %}
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>{{ sudoku_form.r0c0 }}</td>
+                        <td>{{ sudoku_form.r0c1 }}</td>
+                        <td>{{ sudoku_form.r0c2 }}</td>
+                        <td>{{ sudoku_form.r0c3 }}</td>
+                        <td>{{ sudoku_form.r0c4 }}</td>
+                        <td>{{ sudoku_form.r0c5 }}</td>
+                        <td>{{ sudoku_form.r0c6 }}</td>
+                        <td>{{ sudoku_form.r0c7 }}</td>
+                        <td>{{ sudoku_form.r0c8 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r1c0 }}</td>
+                        <td>{{ sudoku_form.r1c1 }}</td>
+                        <td>{{ sudoku_form.r1c2 }}</td>
+                        <td>{{ sudoku_form.r1c3 }}</td>
+                        <td>{{ sudoku_form.r1c4 }}</td>
+                        <td>{{ sudoku_form.r1c5 }}</td>
+                        <td>{{ sudoku_form.r1c6 }}</td>
+                        <td>{{ sudoku_form.r1c7 }}</td>
+                        <td>{{ sudoku_form.r1c8 }}</td>
+
+                    </tr>
+                    <tr class="spaceUnder">
+                        <td>{{ sudoku_form.r2c0 }}</td>
+                        <td>{{ sudoku_form.r2c1 }}</td>
+                        <td>{{ sudoku_form.r2c2 }}</td>
+                        <td>{{ sudoku_form.r2c3 }}</td>
+                        <td>{{ sudoku_form.r2c4 }}</td>
+                        <td>{{ sudoku_form.r2c5 }}</td>
+                        <td>{{ sudoku_form.r2c6 }}</td>
+                        <td>{{ sudoku_form.r2c7 }}</td>
+                        <td>{{ sudoku_form.r2c8 }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r3c0 }}</td>
+                        <td>{{ sudoku_form.r3c1 }}</td>
+                        <td>{{ sudoku_form.r3c2 }}</td>
+                        <td>{{ sudoku_form.r3c3 }}</td>
+                        <td>{{ sudoku_form.r3c4 }}</td>
+                        <td>{{ sudoku_form.r3c5 }}</td>
+                        <td>{{ sudoku_form.r3c6 }}</td>
+                        <td>{{ sudoku_form.r3c7 }}</td>
+                        <td>{{ sudoku_form.r3c8 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r4c0 }}</td>
+                        <td>{{ sudoku_form.r4c1 }}</td>
+                        <td>{{ sudoku_form.r4c2 }}</td>
+                        <td>{{ sudoku_form.r4c3 }}</td>
+                        <td>{{ sudoku_form.r4c4 }}</td>
+                        <td>{{ sudoku_form.r4c5 }}</td>
+                        <td>{{ sudoku_form.r4c6 }}</td>
+                        <td>{{ sudoku_form.r4c7 }}</td>
+                        <td>{{ sudoku_form.r4c8 }}</td>
+
+                    </tr>
+                    <tr class="spaceUnder">
+                        <td>{{ sudoku_form.r5c0 }}</td>
+                        <td>{{ sudoku_form.r5c1 }}</td>
+                        <td>{{ sudoku_form.r5c2 }}</td>
+                        <td>{{ sudoku_form.r5c3 }}</td>
+                        <td>{{ sudoku_form.r5c4 }}</td>
+                        <td>{{ sudoku_form.r5c5 }}</td>
+                        <td>{{ sudoku_form.r5c6 }}</td>
+                        <td>{{ sudoku_form.r5c7 }}</td>
+                        <td>{{ sudoku_form.r5c8 }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r6c0 }}</td>
+                        <td>{{ sudoku_form.r6c1 }}</td>
+                        <td>{{ sudoku_form.r6c2 }}</td>
+                        <td>{{ sudoku_form.r6c3 }}</td>
+                        <td>{{ sudoku_form.r6c4 }}</td>
+                        <td>{{ sudoku_form.r6c5 }}</td>
+                        <td>{{ sudoku_form.r6c6 }}</td>
+                        <td>{{ sudoku_form.r6c7 }}</td>
+                        <td>{{ sudoku_form.r6c8 }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r7c0 }}</td>
+                        <td>{{ sudoku_form.r7c1 }}</td>
+                        <td>{{ sudoku_form.r7c2 }}</td>
+                        <td>{{ sudoku_form.r7c3 }}</td>
+                        <td>{{ sudoku_form.r7c4 }}</td>
+                        <td>{{ sudoku_form.r7c5 }}</td>
+                        <td>{{ sudoku_form.r7c6 }}</td>
+                        <td>{{ sudoku_form.r7c7 }}</td>
+                        <td>{{ sudoku_form.r7c8 }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>{{ sudoku_form.r8c0 }}</td>
+                        <td>{{ sudoku_form.r8c1 }}</td>
+                        <td>{{ sudoku_form.r8c2 }}</td>
+                        <td>{{ sudoku_form.r8c3 }}</td>
+                        <td>{{ sudoku_form.r8c4 }}</td>
+                        <td>{{ sudoku_form.r8c5 }}</td>
+                        <td>{{ sudoku_form.r8c6 }}</td>
+                        <td>{{ sudoku_form.r8c7 }}</td>
+                        <td>{{ sudoku_form.r8c8 }}</td>
+
+                    </tr>
+                </table>
+                <br/><br/>
+
+                <div style="margin: 0 auto; text-align: center">
+                    <button class="btn btn-default btn-lg" type="submit" name="submit"> Solve
+                    </button>
+                    <button class="btn btn-default btn-lg" type="submit" name="clear"> Clear
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+</body>
+</html>
