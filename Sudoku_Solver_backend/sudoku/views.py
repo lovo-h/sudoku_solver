@@ -35,11 +35,18 @@ def solvePuzzle(request):
             else:
                 init = parse_solution(sol)
                 form = SudokuPuzzleForm(init)
+        elif 'play' in request.POST:
+            sol = process(request.POST, 'play')
+            if '0' in sol[0:1]:
+                form = SudokuPuzzleForm(request.POST)
+                err = "No Solution Found"
+            else:
+                init = parse_solution(sol)
+                form = SudokuPuzzleForm(init)
         elif 'submit' in request.POST:
             sol = process(request.POST, 'submit')
             if '0' in sol[0:1]:
                 form = SudokuPuzzleForm(request.POST)
-                err = "No Solution Found"
             else:
                 init = parse_solution(sol)
                 form = SudokuPuzzleForm(init)
@@ -56,18 +63,21 @@ def solvePuzzle(request):
 
 def process(elements, type):
     puzzle = ""
-    for row in range(0, 9):
-        for col in range(0, 9):
-            ele = "r" + str(row) + "c" + str(col)
-            if elements[ele] == "":
-                puzzle += "."
-            if elements[ele] == " ":
-                puzzle += "."
-            else:
-                puzzle += elements[ele]
+    if type != 'play':
+        for row in range(0, 9):
+            for col in range(0, 9):
+                ele = "r" + str(row) + "c" + str(col)
+                if elements[ele] == "":
+                    puzzle += "."
+                if elements[ele] == " ":
+                    puzzle += "."
+                else:
+                    puzzle += elements[ele]
 
     if type == 'hint':
         puzzle += "h"
+    if type == 'play':
+        puzzle += "play"
     file_problem = "./sudoku_solver_02/problem.txt"
     file_solution = "./sudoku_solver_02/solution.txt"
     my_returned_solution = ""
