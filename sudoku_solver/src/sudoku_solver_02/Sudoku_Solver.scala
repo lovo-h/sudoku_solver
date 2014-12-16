@@ -18,6 +18,7 @@ class Sudoku_Solver {
 
   def processPuzzleInput(puzzle: String): Boolean = {
     var arrPuzzle = puzzle.toCharArray();
+//    println(puzzle);
     var col = 0;
     var row = 0;
 
@@ -27,6 +28,7 @@ class Sudoku_Solver {
 
     for (i <- 0 until arrPuzzle.length) {
       if (arrPuzzle(i).toString.compareTo(".") == 0 || arrPuzzle(i).toString.compareTo("0") == 0) {
+       // println(arrPuzzle(i));
         //        System.out.println("Skip: " + i.toString);
       } else {
         if (!successfullySetElement(row.toString + col.toString, arrPuzzle(i).toString)) {
@@ -51,6 +53,7 @@ class Sudoku_Solver {
   }
 
   def solveCurrentBoard(): Boolean = {
+  //  println("solveCurrentBoard");
     // if all elements have a single solution, it's already valid
     if (isCurrentBoardSolutionValid()) {
       return true;
@@ -63,6 +66,7 @@ class Sudoku_Solver {
       for (col <- 0 until 9) {
         var element = row.toString + col.toString;
         var elementVal = board(element);
+     //   print(elementVal + ", ")
         if (elementVal.length > 1) {
           if (elementVal.length < minElementVal.length) {
             minElementVal = elementVal;
@@ -71,7 +75,7 @@ class Sudoku_Solver {
         }
       }
     }
-
+ //   println();
     // just in case something goes wrong, we backup
     var backupCurrentBoard: collection.mutable.Map[String, String] = board.clone;
     var arrPossibleSolutions = board(location).toCharArray();

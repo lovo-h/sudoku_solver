@@ -4,8 +4,9 @@
     <data-source source="LOCAL" name="Django default" uuid="c37d5d2c-1521-44e9-bd80-450905f2086c">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Dylan Doggett\Documents\GitHub\sudoku_solver\Sudoku_Solver_backend\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\lovo-h\Documents\GitHub\sudoku_solver\Sudoku_Solver_backend\db.sqlite3</jdbc-url>
       <libraries />
     </data-source>
   </component>
 </project>
+
