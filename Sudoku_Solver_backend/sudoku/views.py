@@ -13,7 +13,10 @@ def parse_solution(solution):
     for row in range(0, 9):
         for col in range(0, 9):
             elem = "r" + str(row) + "c" + str(col)
-            ret_sol[elem] = solution[count:count + 1]
+            if solution[count:count + 1] == '.':
+                ret_sol[elem] = " "
+            else:
+                ret_sol[elem] = solution[count:count + 1]
             count += 1
 
     return ret_sol
@@ -24,8 +27,16 @@ def solvePuzzle(request):
         err = ""
         if 'clear' in request.POST:
             form = SudokuPuzzleForm()
+        elif 'hint' in request.POST:
+            sol = process(request.POST, 'hint')
+            if '0' in sol[0:1]:
+                form = SudokuPuzzleForm(request.POST)
+                err = "No Solution Found"
+            else:
+                init = parse_solution(sol)
+                form = SudokuPuzzleForm(init)
         elif 'submit' in request.POST:
-            sol = process(request.POST)
+            sol = process(request.POST, 'submit')
             if '0' in sol[0:1]:
                 form = SudokuPuzzleForm(request.POST)
                 err = "No Solution Found"
@@ -43,16 +54,20 @@ def solvePuzzle(request):
         return render(request, 'sudoku/index.html', context)
 
 
-def process(elements):
+def process(elements, type):
     puzzle = ""
     for row in range(0, 9):
         for col in range(0, 9):
             ele = "r" + str(row) + "c" + str(col)
             if elements[ele] == "":
                 puzzle += "."
+            if elements[ele] == " ":
+                puzzle += "."
             else:
                 puzzle += elements[ele]
 
+    if type == 'hint':
+        puzzle += "h"
     file_problem = "./sudoku_solver_02/problem.txt"
     file_solution = "./sudoku_solver_02/solution.txt"
     my_returned_solution = ""
