@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;sudoku_solver/src/sudoku_solver_02&apos;&#x0D;&#x0A;- Original project: &apos;sudoku_solver&apos;&#x0D;&#x0A;- Destination element: &apos;sudoku_solver/src/sudoku_solver_02&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     Main.scala&#x0D;&#x0A;     Sudoku_Solver.scala&#x0D;&#x0A;- Update references to refactored element" description="Move files" destination="/src&lt;sudoku_solver_02" element1="src/Main.scala" element2="src/Sudoku_Solver.scala" files="2" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1418688650487" units="0" version="1.0"/>
+</session>
